@@ -1,0 +1,91 @@
+{
+  "name": "mage",
+  "displayName": "Mage",
+  "description": "Invoke adhoc scripts within the VS Code context.",
+  "version": "0.0.0",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "publisher": "prmichaelsen",
+  "author": {
+    "email": "michaelsenpatrick@gmail.com",
+    "name": "Patrick Michaelsen",
+    "url": "https://github.com/prmichaelsen"
+  },
+  "repository": {
+    "url": "https://github.com/prmichaelsen/mage",
+    "type": "git"
+  },
+  "icon": "images/icon.png",
+  "main": "./build/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run esbuild-base -- --minify",
+    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=build/extension.js --external:vscode --format=cjs --platform=node",
+    "esbuild": "npm run esbuild-base -- --sourcemap",
+    "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+    "test-compile": "tsc -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "jest",
+    "prettier": "prettier --write ."
+  },
+  "engines": {
+    "vscode": "^1.56.0"
+  },
+  "contributes": {
+    "keybindings": [
+      {
+        "command": "mage.invoke",
+        "key": "cmd+;",
+        "mac": "cmd+;"
+      }
+    ],
+    "commands": [
+      {
+        "command": "mage.invoke",
+        "title": "Mage: Invoke"
+      },
+      {
+        "command": "mage.log.show",
+        "title": "Mage: Show log"
+      }
+    ],
+    "configuration": {
+      "title": "Mage",
+      "properties": {
+        "mage.logLevel.info": {
+          "type": "boolean",
+          "default": true
+        },
+        "mage.logLevel.log": {
+          "type": "boolean",
+          "default": true
+        },
+        "mage.logLevel.error": {
+          "type": "boolean",
+          "default": true
+        },
+        "mage.logLevel.warn": {
+          "type": "boolean",
+          "default": true
+        },
+        "mage.logLevel.debug": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "glob": "^10.3.15"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "esbuild": "^0.21.4",
+    "jest": "^29.7.0",
+    "prettier": "^3.2.5",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.4.5",
+    "vscode": "^1.1.37"
+  }
+}

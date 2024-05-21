@@ -1,0 +1,10 @@
+node_modules
+coverage
+src
+*.vsix
+*.config.*
+tsconfig.json
+.vscode/**
+.vscode-test/**
+.gitignore
+*lock*
